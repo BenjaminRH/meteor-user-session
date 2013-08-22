@@ -20,7 +20,7 @@ Provides a `UserSession` object that works just like `Session` does, except it's
 2. `mrt add user-session`
 
 
-### Maintainers
+### Authors
 
  * BenjaminRH
  * digilord
