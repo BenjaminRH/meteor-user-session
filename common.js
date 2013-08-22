@@ -1,0 +1,104 @@
+// This collection is where the UserSession variables are ultimately stored
+UserSessionCollection = new Meteor.Collection('userSessionCollection');
+
+// Anonymous user error
+noUserError = function () {
+	console.log('You cannot use UserSession methods when there is no user logged in.');
+}
+
+// Missing userId error
+noUserIdError = function () {
+	console.log('You cannot use UserSession methods on the server without a userId.');
+}
+
+
+//=======================
+// = UserSession METHODS
+//=======================
+
+UserSession = {
+	set: function (key, value, userId) {
+		// Set a new variable in the user session
+		if (Meteor.userId || Meteor.isServer) {
+			// If the user is logged in, update the variable in the collection
+			if (typeof userId === 'undefined') {
+				if (Meteor.isClient) var userId = Meteor.userId;
+				else if (Meteor.isServer) {
+					noUserIdError();
+					return undefined;
+				}
+			}
+			var existing = UserSession.findOne({ key: key, userId: userId});
+			var sv = { key: key, value: value, userId: userId };
+			if (existing) UserSessionCollection.update({ key: key }, { $set: sv });
+			else UserSessionCollection.insert(sv);
+		} else {
+			//XXX Maybe we should degrade to normal Session and sync on login
+			noUserError();
+		}
+	},
+	get: function (key, value, userId) {
+		// Get the value of a user session variable
+		if (Meteor.userId || Meteor.isServer) {
+			if (typeof userId === 'undefined') {
+				if (Meteor.isClient) var userId = Meteor.userId;
+				else if (Meteor.isServer) {
+					noUserIdError();
+					return undefined;
+				}
+			}
+			var existing = UserSession.findOne({ key: key, userId: userId});
+			if (existing) return existing.value;
+		} else {
+			noUserError();
+		}
+	},
+	delete: function (key, value, userId) {
+		// Delete a user session variable, if it exists
+		if (Meteor.userId || Meteor.isServer) {
+			if (typeof userId === 'undefined') {
+				if (Meteor.isClient) var userId = Meteor.userId;
+				else if (Meteor.isServer) {
+					noUserIdError();
+					return undefined;
+				}
+			}
+			var existing = UserSession.findOne({ key: key, userId: userId});
+			if (existing) UserSessionCollection.delete({ key: key, userId: userId });
+		} else {
+			noUserError();
+		}
+	},
+	equals: function (key, value, userId) {
+		// Test if a user session variable is equal to a value
+		if (Meteor.userId || Meteor.isServer) {
+			if (typeof userId === 'undefined') {
+				if (Meteor.isClient) var userId = Meteor.userId;
+				else if (Meteor.isServer) {
+					noUserIdError();
+					return undefined;
+				}
+			}
+			var existing = UserSession.findOne({ key: key, userId: userId});
+			if (existing) return existing.value == value; //XXX Should this be ===
+		} else {
+			noUserError();
+		}
+	},
+	list: function (key, value, userId) {
+		// Get all the user session variables as an object
+		if (Meteor.userId || Meteor.isServer) {
+			if (typeof userId === 'undefined') {
+				if (Meteor.isClient) var userId = Meteor.userId;
+				else if (Meteor.isServer) {
+					noUserIdError();
+					return undefined;
+				}
+			}
+			var existing = UserSession.findOne({ key: key, userId: userId});
+			if (existing) return _.pick(UserSessionCollection.find({ userId: userId }).fetch(), 'key', 'value');
+		} else {
+			noUserError();
+		}
+	}
+};
