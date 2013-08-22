@@ -10,7 +10,7 @@ Provides a `UserSession` object that works just like `Session` does, except it's
  * `UserSession.set(key, value [, server: userId])` ( _anywhere_ ) - Set a new variable in the user session
  * `UserSession.get(key [, server: userId])` ( _anywhere_ ) - Get the value of a user session variable
  * `UserSession.delete(key [, server: userId])` ( _anywhere_ ) - Delete a user session variable, if it exists
- * `UserSession.equals([server: userId])` ( _anywhere_ ) - Test if a user session variable is equal to a value
+ * `UserSession.equals(key, value [, server: userId])` ( _anywhere_ ) - Test if a user session variable is equal to a value
  * `UserSession.list([server: userId])` ( _anywhere_ ) - Get all the user session variables as an object
 
 

@@ -1,5 +1,5 @@
 // Publish only the current user's session variables to the client
-Meteor.publish("userSessionCollection", function () {
+Meteor.publish('userSessionCollection', function () {
 	return UserSessionCollection.find({ userId: this.userId });
 });
 
@@ -13,11 +13,10 @@ UserSessionCollection.allow({
 	insert: function (userId, doc) {
 		return ownsDocument(userId, doc);
 	},
-	update: function (userId, doc, fields, modifier) {
+	update: function (userId, doc) {
 		return ownsDocument(userId, doc);
 	},
 	remove: function (userId, doc) {
 		return ownsDocument(userId, doc);
-	},
-	fetch: ['userId']
+	}
 });
