@@ -1,0 +1,32 @@
+{
+  "name": "meteor-user-session",
+  "version": "0.2.0",
+  "description": "Provides a UserSession object that works just like Session does, except it's persistent so you can preserve state across devices *and* sessions.",
+  "author": "Benjamin Harris <http://benjaminrharris.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BenjaminRH/meteor-user-session.git"
+  },
+  "keywords": [
+    "meteor",
+    "user",
+    "session"
+  ],
+  "contributors": [
+    "Benjamin Harris <http://benjaminrharris.com>",
+    "Sergey Todyshev <stodyshev@gmail.com>"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "~0.7.1",
+    "grunt-coffeelint": "0.0.8"
+    "grunt-cli": "~0.1.11",
+    "grunt-npm": "0.0.2",
+    "grunt-bump": "0.0.13"
+  },
+  "scripts": {
+    "lint": "grunt lint",
+    "test": "grunt test"
+  }
+}
