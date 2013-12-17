@@ -6,7 +6,7 @@ Meteor.publish('userSessionCollection', function () {
 // Check that the userId specified owns the documents
 ownsDocument = function (userId, doc) {
 	return doc && doc.userId === userId;
-}
+};
 
 // Allow methods for UserSessionCollection (security)
 UserSessionCollection.allow({
