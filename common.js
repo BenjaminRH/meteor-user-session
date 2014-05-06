@@ -38,7 +38,7 @@ UserSession = {
 		// Get the value of a user session variable
 		if (Meteor.isServer && undefined !== userId || Meteor.isClient && (undefined !== userId || Meteor.userId()) ) {
 			// If the user is logged in and no userId is passed, use the logged in user ID
-			if ('undefined' === userId && Meteor.isClient) {
+			if (undefined === userId && Meteor.isClient) {
         userId = Meteor.userId();
       }
       
@@ -52,7 +52,7 @@ UserSession = {
 		// Delete a user session variable, if it exists
 		if (Meteor.isServer && undefined !== userId || Meteor.isClient && (undefined !== userId || Meteor.userId()) ) {
 			// If the user is logged in and no userId is passed, use the logged in user ID
-			if ('undefined' === userId && Meteor.isClient) {
+			if (undefined === userId && Meteor.isClient) {
         userId = Meteor.userId();
       }
       
@@ -66,7 +66,7 @@ UserSession = {
 		// Test if a user session variable is equal to a value
 		if (Meteor.isServer && undefined !== userId || Meteor.isClient && (undefined !== userId || Meteor.userId()) ) {
 			// If the user is logged in and no userId is passed, use the logged in user ID
-			if ('undefined' === userId && Meteor.isClient) {
+			if (undefined === userId && Meteor.isClient) {
         userId = Meteor.userId();
       }
       
@@ -80,7 +80,7 @@ UserSession = {
 		// Get all the user session variables as an object
 		if (Meteor.isServer && undefined !== userId || Meteor.isClient && (undefined !== userId || Meteor.userId()) ) {
 			// If the user is logged in and no userId is passed, use the logged in user ID
-			if ('undefined' === userId && Meteor.isClient) {
+			if (undefined === userId && Meteor.isClient) {
         userId = Meteor.userId();
       }
       
