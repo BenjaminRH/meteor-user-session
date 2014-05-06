@@ -19,15 +19,12 @@ noUserIdError = function () {
 UserSession = {
 	set: function (key, value, userId) {
 		// Set a new variable in the user session
-		if (Meteor.userId() || Meteor.isServer) {
-			// If the user is logged in, update the variable in the collection
-			if (typeof userId === 'undefined') {
-				if (Meteor.isClient) userId = Meteor.userId();
-				else if (Meteor.isServer) {
-					noUserIdError();
-					return undefined;
-				}
-			}
+		if (Meteor.isServer && undefined !== userId || Meteor.isClient && (undefined !== userId || Meteor.userId()) ) {
+			// If the user is logged in and no userId is passed, use the logged in user ID
+			if (undefined === userId && Meteor.isClient) {
+        userId = Meteor.userId();
+      }
+
 			var existing = UserSessionCollection.findOne({ key: key, userId: userId});
 			var sv = { key: key, value: value, userId: userId };
 			if (existing) UserSessionCollection.update({ _id: existing._id }, { $set: sv });
@@ -39,14 +36,12 @@ UserSession = {
 	},
 	get: function (key, userId) {
 		// Get the value of a user session variable
-		if (Meteor.userId() || Meteor.isServer) {
-			if (typeof userId === 'undefined') {
-				if (Meteor.isClient) userId = Meteor.userId();
-				else if (Meteor.isServer) {
-					noUserIdError();
-					return undefined;
-				}
-			}
+		if (Meteor.isServer && undefined !== userId || Meteor.isClient && (undefined !== userId || Meteor.userId()) ) {
+			// If the user is logged in and no userId is passed, use the logged in user ID
+			if (undefined === userId && Meteor.isClient) {
+        userId = Meteor.userId();
+      }
+      
 			var existing = UserSessionCollection.findOne({ key: key, userId: userId});
 			if (existing) return existing.value;
 		} else {
@@ -55,14 +50,12 @@ UserSession = {
 	},
 	delete: function (key, userId) {
 		// Delete a user session variable, if it exists
-		if (Meteor.userId() || Meteor.isServer) {
-			if (typeof userId === 'undefined') {
-				if (Meteor.isClient) userId = Meteor.userId();
-				else if (Meteor.isServer) {
-					noUserIdError();
-					return undefined;
-				}
-			}
+		if (Meteor.isServer && undefined !== userId || Meteor.isClient && (undefined !== userId || Meteor.userId()) ) {
+			// If the user is logged in and no userId is passed, use the logged in user ID
+			if (undefined === userId && Meteor.isClient) {
+        userId = Meteor.userId();
+      }
+      
 			var existing = UserSessionCollection.findOne({ key: key, userId: userId});
 			if (existing) UserSessionCollection.remove(existing._id);
 		} else {
@@ -71,14 +64,12 @@ UserSession = {
 	},
 	equals: function (key, value, userId) {
 		// Test if a user session variable is equal to a value
-		if (Meteor.userId() || Meteor.isServer) {
-			if (typeof userId === 'undefined') {
-				if (Meteor.isClient) userId = Meteor.userId();
-				else if (Meteor.isServer) {
-					noUserIdError();
-					return undefined;
-				}
-			}
+		if (Meteor.isServer && undefined !== userId || Meteor.isClient && (undefined !== userId || Meteor.userId()) ) {
+			// If the user is logged in and no userId is passed, use the logged in user ID
+			if (undefined === userId && Meteor.isClient) {
+        userId = Meteor.userId();
+      }
+      
 			var existing = UserSessionCollection.findOne({ key: key, userId: userId});
 			if (existing) return existing.value == value; //XXX Should this be ===
 		} else {
@@ -87,14 +78,12 @@ UserSession = {
 	},
 	list: function (userId) {
 		// Get all the user session variables as an object
-		if (Meteor.userId() || Meteor.isServer) {
-			if (typeof userId === 'undefined') {
-				if (Meteor.isClient) userId = Meteor.userId();
-				else if (Meteor.isServer) {
-					noUserIdError();
-					return undefined;
-				}
-			}
+		if (Meteor.isServer && undefined !== userId || Meteor.isClient && (undefined !== userId || Meteor.userId()) ) {
+			// If the user is logged in and no userId is passed, use the logged in user ID
+			if (undefined === userId && Meteor.isClient) {
+        userId = Meteor.userId();
+      }
+      
 			var existing = UserSessionCollection.findOne({ userId: userId});
 			if (existing) {
 				var list = {};
